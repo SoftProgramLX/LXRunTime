@@ -1,0 +1,21 @@
+{
+    "address": {
+        "city": "遵义市",
+        "likePlaces": {
+            "place": "HongKong"
+        },
+        "province": "贵州省"
+    },
+    "age": 25,
+    "foods" :[
+    {
+        "food": "rice",
+        "fruit": "apple",
+    },
+    {
+        "food": "noodle",
+        "fruit": "watermelon",
+    }
+    ],
+    "name": "lixu"
+}

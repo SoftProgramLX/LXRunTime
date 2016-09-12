@@ -11,5 +11,7 @@
 @interface NSObject (DictionaryToModel)
 
 + (void)transformToModelByDictionary:(NSDictionary *)dict;
++ (instancetype)modelWithDictionary:(NSDictionary *)dictionary;
++ (NSDictionary *)arrayContainModelClass;
 
 @end

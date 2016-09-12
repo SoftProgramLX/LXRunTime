@@ -11,53 +11,82 @@
 
 @implementation NSObject (DictionaryToModel)
 
-+ (void)transformToModelByDictionary:(NSDictionary *)dict
++ (instancetype)modelWithDictionary:(NSDictionary *)dictionary
 {
-    // 根据类别拼接属性字符串代码
-    NSMutableString *str = [NSMutableString string];
+    id objc = [[self alloc] init];
+    unsigned int count;
+
+    // 获取类中的所有成员属性
+    Ivar *ivarList = class_copyIvarList(self, &count);
     
-    // 遍历字典,把字典中的所有key取出来;生成对应的属性代码
-    [dict enumerateKeysAndObjectsUsingBlock:^(id _Nonnull key, id _Nonnull obj, BOOL * _Nonnull stop) {
+    for (int i = 0; i < count; i++) {
+        // 根据角标，从数组取出对应的成员属性
+        Ivar ivar = ivarList[i];
         
-        // 对各类新进行分类, 抽取出来
-        NSString *type;
+        // 获取成员属性名
+        NSString *name = [NSString stringWithUTF8String:ivar_getName(ivar)];
         
-        // 需要 理解 系统底层 数据结构类型
-        if ([obj isKindOfClass:NSClassFromString(@"__NSCFString")]) {
-            type = @"NSString";
-        } else if ([obj isKindOfClass:NSClassFromString(@"__NSArrayI")])
-        {
-            type = @"NSArray";
-        } else if ([obj isKindOfClass:NSClassFromString(@"__NSArrayM")])
-        {
-            type = @"NSMutableArray";
+        // 从第一个角标开始截取，因为属性变量的第一个字符为“_”,
+        if (![[name substringToIndex:1] isEqualToString:@"_"]) {
+            continue;
         }
-        else if ([obj isKindOfClass:NSClassFromString(@"__NSCFNumber")])
-        {
-            type = @"NSNumber";
-        } else if ([obj isKindOfClass:NSClassFromString(@"__NSDictionaryI")])
-        {
-            type = @"NSDictionary";
-        } else if ([obj isKindOfClass:NSClassFromString(@"__NSDictionaryM")])
-        {
-            type = @"NSMutableDictionary";
-        }
+        NSString *key = [name substringFromIndex:1];
+        // 根据成员属性名去字典中查找对应的value
+        id value = dictionary[key];
         
-        // 属性字符串
-        NSString *property;
-        if ([type containsString:@"NS"]) {
-            property = [NSString stringWithFormat:@"@property (nonatomic, strong) %@ *%@", type, key];
-        } else {
-            property = [NSString stringWithFormat:@"@property (nonatomic, assign) %@ %@", type, key];
+        // 二级转换:如果字典中还有字典，也需要把对应的字典转换成模型
+        // 判断下value是否是字典
+        if ([value isKindOfClass:[NSDictionary class]]) {
+            // 获取成员属性类型
+            NSString *type = [NSString stringWithUTF8String:ivar_getTypeEncoding(ivar)];
+            
+            // 根据字符串类名生成类对象
+            Class modelClass = NSClassFromString([self cutClassString:type]);
+            
+            if (modelClass) { // 有对应的模型才需要转
+                // 把字典转模型，采用递归
+                value = [modelClass modelWithDictionary:value];
+            }
         }
         
-        // 每生成一对属性字符串 就自动换行
-        [str appendFormat:@"\n%@", property];
-        
-    }];
+        // 三级转换：NSArray中也是字典，把数组中的字典转换成模型.
+        // 判断值是否是数组
+        if ([value isKindOfClass:[NSArray class]]) {
+            // 判断对应类有没有实现字典数组转模型数组的协议
+            if ([self respondsToSelector:@selector(arrayContainModelClass)]) {
+
+                // 获取数组中字典对应的模型
+                Class classModel = [self arrayContainModelClass][key];
+                NSMutableArray *arrM = [NSMutableArray array];
+                // 遍历字典数组，生成模型数组
+                for (NSDictionary *dict in value) {
+                    // 字典转模型
+                    id model =  [classModel modelWithDictionary:dict];
+                    [arrM addObject:model];
+                }
+
+                // 把模型数组赋值给value
+                value = arrM;
+            }
+        }
+        if (value) { // 有值，才需要给模型的属性赋值
+            // 利用KVC给模型中的属性赋值
+            [objc setValue:value forKey:key];
+        }
+    }
     
-    // 打印出拼接的字符串
-    NSLog(@"对应属性 -> %@", str);
+    return objc;
+}
+
+// 裁剪类型字符串
++ (NSString *)cutClassString:(NSString *)classString
+{
+    // 生成的是这种@"User" 类型,在OC字符串中 \是转义的意思，不占用字符
+    NSRange range = [classString rangeOfString:@"\""];
+    classString = [classString substringFromIndex:range.location + range.length];
+    range = [classString rangeOfString:@"\""];
+    classString = [classString substringToIndex:range.location];
+    return classString;
 }
 
 @end

@@ -10,6 +10,7 @@
 #import <objc/runtime.h>
 #import "AppDelegate.h"
 #import "NSObject+DictionaryToModel.h"
+#import "LXResultModel.h"
 
 //用全局变量的地址作为关联对象的key
 static char associatedObjectKey;
@@ -49,16 +50,6 @@ void defualtFunc(id self, SEL _cmd)
     [self testRunTimeDictionaryToModel];
 }
 
-- (void)testRunTimeDictionaryToModel
-{
-    NSArray *array = [NSArray arrayWithObjects:@1, @2, @3, @4, nil];
-    NSMutableArray *arr = [NSMutableArray arrayWithArray:array];
-    
-    NSDictionary *dic = @{@"province": @"贵州省", @"city": @"遵义市"};
-    
-    [NSObject transformToModelByDictionary:@{@"name" : @"lixu", @"num" : array, @"age" : @25, @"address" : dic}];
-}
-
 /**
  *  runtime获取变量、属性、方法、协议
  */
@@ -72,7 +63,12 @@ void defualtFunc(id self, SEL _cmd)
         Ivar myivar = ivarList[i];
         const char *ivarname = ivar_getName(myivar);
         const char *ivarType = ivar_getTypeEncoding(myivar); // 获取变量编码类型
-        NSLog(@"ivar----="">%@  %@", [NSString stringWithUTF8String:ivarname], [NSString stringWithUTF8String:ivarType]);
+        NSString *ivarNameStr = [NSString stringWithUTF8String:ivarname];
+        NSLog(@"ivar----="">%@  %@", ivarNameStr, [NSString stringWithUTF8String:ivarType]);
+        if ([ivarNameStr isEqualToString:@"_property2"]) {
+            [self setValue:@"这是属性值" forKey:@"property2"];
+            NSLog(@"self.property2:%@", self.property2);
+        }
     }
     
     //获取属性列表
@@ -119,10 +115,10 @@ void defualtFunc(id self, SEL _cmd)
 {
     //获取关联对象string与label
 
-    NSString *string = objc_getAssociatedObject(self, &associatedObjectKey);
-    
+    NSString *propertyString = objc_getAssociatedObject(self, &associatedObjectKey);
+
     UILabel *label = objc_getAssociatedObject(self, &associatedObjectKey2);
-    label.text = [NSString stringWithFormat:@"动态添加的属性名称为：%@\n此label也是动态添加的对象", string];
+    label.text = [NSString stringWithFormat:@"动态添加的属性名称为：%@\n此label也是动态添加的对象", propertyString];
     [self.view addSubview:label];
 }
 
@@ -157,7 +153,7 @@ void defualtFunc(id self, SEL _cmd)
 }
 
 /**
- *  过滤：
+ *  runtime过滤：
  *  调用一个不存在的实例方法的时候，会调用resolveInstanceMethod:方法，默认返回NO
  *  调用一个不存在的类方法的时候，会调用resolveClassMethod:方法，默认返回NO
  */
@@ -176,7 +172,7 @@ void defualtFunc(id self, SEL _cmd)
 }
 
 /**
- *  重定向:
+ *  runtime重定向:
  *  将你调用的不存在的方法重定向到一个其他声明了这个方法的类，只需要返回一个有这个方法的target
  *
  */
@@ -190,7 +186,7 @@ void defualtFunc(id self, SEL _cmd)
 }
 
 /**
- *  转发:
+ *  runtime转发:
  *  是将调用不存在的方法打包成了NSInvocation传递来。做完你自己的处理后，调用invokeWithTarget:方法让某个target触发这个方法
  *
  */
@@ -202,6 +198,26 @@ void defualtFunc(id self, SEL _cmd)
     } else {
         [super forwardInvocation:anInvocation];
     }
+}
+
+/**
+ *  runtime字典转model
+ */
+- (void)testRunTimeDictionaryToModel
+{
+    //获取字典数据
+    NSDictionary *dictionary = [self getMainBundleResource:@"jsonData.json"];
+    
+    LXResultModel *model = [LXResultModel modelWithDictionary:dictionary];
+    NSLog(@"model.foods[0].food: %@", model.foods[0].food);
+}
+
+- (NSDictionary *)getMainBundleResource:(NSString *)file
+{
+    NSString *pathstr = [[NSBundle mainBundle] pathForResource:file ofType:nil];
+    NSData *data = [[NSData alloc] initWithContentsOfFile:pathstr];
+    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    return dictionary;
 }
 
 @end

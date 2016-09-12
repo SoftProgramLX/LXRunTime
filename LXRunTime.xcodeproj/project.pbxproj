@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		5CD91D531D865CA200176545 /* NSObject+DictionaryToModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD91D521D865CA200176545 /* NSObject+DictionaryToModel.m */; };
+		5CD91D5D1D866E2400176545 /* LXResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD91D5C1D866E2400176545 /* LXResultModel.m */; };
+		5CD91D601D866E3E00176545 /* LXAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD91D5F1D866E3E00176545 /* LXAddressModel.m */; };
+		5CD91D631D867E9500176545 /* LXFoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD91D621D867E9500176545 /* LXFoodsModel.m */; };
+		5CD91D661D86813600176545 /* LXLikePlacesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD91D651D86813600176545 /* LXLikePlacesModel.m */; };
+		5CD91D6A1D868AB400176545 /* jsonData.json in Resources */ = {isa = PBXBuildFile; fileRef = 5CD91D691D868AB400176545 /* jsonData.json */; };
 		5CEAF3791D8419F300D1759F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAF3781D8419F300D1759F /* main.m */; };
 		5CEAF37C1D8419F300D1759F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAF37B1D8419F300D1759F /* AppDelegate.m */; };
 		5CEAF37F1D8419F300D1759F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAF37E1D8419F300D1759F /* ViewController.m */; };
@@ -39,6 +44,15 @@
 /* Begin PBXFileReference section */
 		5CD91D511D865CA200176545 /* NSObject+DictionaryToModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DictionaryToModel.h"; sourceTree = "<group>"; };
 		5CD91D521D865CA200176545 /* NSObject+DictionaryToModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DictionaryToModel.m"; sourceTree = "<group>"; };
+		5CD91D5B1D866E2400176545 /* LXResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXResultModel.h; sourceTree = "<group>"; };
+		5CD91D5C1D866E2400176545 /* LXResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXResultModel.m; sourceTree = "<group>"; };
+		5CD91D5E1D866E3E00176545 /* LXAddressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXAddressModel.h; sourceTree = "<group>"; };
+		5CD91D5F1D866E3E00176545 /* LXAddressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXAddressModel.m; sourceTree = "<group>"; };
+		5CD91D611D867E9500176545 /* LXFoodsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFoodsModel.h; sourceTree = "<group>"; };
+		5CD91D621D867E9500176545 /* LXFoodsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFoodsModel.m; sourceTree = "<group>"; };
+		5CD91D641D86813600176545 /* LXLikePlacesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXLikePlacesModel.h; sourceTree = "<group>"; };
+		5CD91D651D86813600176545 /* LXLikePlacesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXLikePlacesModel.m; sourceTree = "<group>"; };
+		5CD91D691D868AB400176545 /* jsonData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jsonData.json; sourceTree = "<group>"; };
 		5CEAF3741D8419F300D1759F /* LXRunTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LXRunTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CEAF3781D8419F300D1759F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5CEAF37A1D8419F300D1759F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -84,6 +98,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5CD91D5A1D866E0800176545 /* RuntimeDicToModel */ = {
+			isa = PBXGroup;
+			children = (
+				5CD91D691D868AB400176545 /* jsonData.json */,
+				5CD91D5B1D866E2400176545 /* LXResultModel.h */,
+				5CD91D5C1D866E2400176545 /* LXResultModel.m */,
+				5CD91D5E1D866E3E00176545 /* LXAddressModel.h */,
+				5CD91D5F1D866E3E00176545 /* LXAddressModel.m */,
+				5CD91D611D867E9500176545 /* LXFoodsModel.h */,
+				5CD91D621D867E9500176545 /* LXFoodsModel.m */,
+				5CD91D641D86813600176545 /* LXLikePlacesModel.h */,
+				5CD91D651D86813600176545 /* LXLikePlacesModel.m */,
+			);
+			path = RuntimeDicToModel;
+			sourceTree = "<group>";
+		};
 		5CEAF36B1D8419F300D1759F = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +137,7 @@
 		5CEAF3761D8419F300D1759F /* LXRunTime */ = {
 			isa = PBXGroup;
 			children = (
+				5CD91D5A1D866E0800176545 /* RuntimeDicToModel */,
 				5CEAF37A1D8419F300D1759F /* AppDelegate.h */,
 				5CEAF37B1D8419F300D1759F /* AppDelegate.m */,
 				5CEAF3AA1D841A7A00D1759F /* AppDelegate+RunTime.h */,
@@ -115,10 +146,6 @@
 				5CEAF37E1D8419F300D1759F /* ViewController.m */,
 				5CD91D511D865CA200176545 /* NSObject+DictionaryToModel.h */,
 				5CD91D521D865CA200176545 /* NSObject+DictionaryToModel.m */,
-				5CEAF3801D8419F400D1759F /* Main.storyboard */,
-				5CEAF3831D8419F400D1759F /* Assets.xcassets */,
-				5CEAF3851D8419F400D1759F /* LaunchScreen.storyboard */,
-				5CEAF3881D8419F400D1759F /* Info.plist */,
 				5CEAF3771D8419F300D1759F /* Supporting Files */,
 			);
 			path = LXRunTime;
@@ -127,6 +154,10 @@
 		5CEAF3771D8419F300D1759F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5CEAF3801D8419F400D1759F /* Main.storyboard */,
+				5CEAF3831D8419F400D1759F /* Assets.xcassets */,
+				5CEAF3851D8419F400D1759F /* LaunchScreen.storyboard */,
+				5CEAF3881D8419F400D1759F /* Info.plist */,
 				5CEAF3781D8419F300D1759F /* main.m */,
 			);
 			name = "Supporting Files";
@@ -254,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CEAF3871D8419F400D1759F /* LaunchScreen.storyboard in Resources */,
+				5CD91D6A1D868AB400176545 /* jsonData.json in Resources */,
 				5CEAF3841D8419F400D1759F /* Assets.xcassets in Resources */,
 				5CEAF3821D8419F400D1759F /* Main.storyboard in Resources */,
 			);
@@ -280,9 +312,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CD91D661D86813600176545 /* LXLikePlacesModel.m in Sources */,
+				5CD91D601D866E3E00176545 /* LXAddressModel.m in Sources */,
+				5CD91D631D867E9500176545 /* LXFoodsModel.m in Sources */,
 				5CEAF37F1D8419F300D1759F /* ViewController.m in Sources */,
 				5CEAF37C1D8419F300D1759F /* AppDelegate.m in Sources */,
 				5CD91D531D865CA200176545 /* NSObject+DictionaryToModel.m in Sources */,
+				5CD91D5D1D866E2400176545 /* LXResultModel.m in Sources */,
 				5CEAF3791D8419F300D1759F /* main.m in Sources */,
 				5CEAF3AC1D841A7A00D1759F /* AppDelegate+RunTime.m in Sources */,
 			);
