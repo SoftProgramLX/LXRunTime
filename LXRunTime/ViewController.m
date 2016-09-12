@@ -94,35 +94,6 @@ void defualtFunc(id self, SEL _cmd)
 }
 
 /**
- *  runtime添加属性，还可以添加任何对象
- */
-- (void)testRunTimeAddValue
-{
-    //添加属性
-    objc_setAssociatedObject(self, &associatedObjectKey, @"addProperty", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
-    //添加对象
-    UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(10, 100, 300, 60)];
-    label.numberOfLines = 2;
-    label.textColor = [UIColor blueColor];
-    label.backgroundColor = [UIColor redColor];
-    objc_setAssociatedObject(self, &associatedObjectKey2,label, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
-    [self getValueOfRunTime];
-}
-
-- (void)getValueOfRunTime
-{
-    //获取关联对象string与label
-
-    NSString *propertyString = objc_getAssociatedObject(self, &associatedObjectKey);
-
-    UILabel *label = objc_getAssociatedObject(self, &associatedObjectKey2);
-    label.text = [NSString stringWithFormat:@"动态添加的属性名称为：%@\n此label也是动态添加的对象", propertyString];
-    [self.view addSubview:label];
-}
-
-/**
  *  runtime交换方法：
  *  交换实例方法使用class_getInstanceMethod
  *  交换类方法使用class_getClassMethod
@@ -150,6 +121,35 @@ void defualtFunc(id self, SEL _cmd)
 - (void)testFunction2
 {
     NSLog(@"runtime交换方法-testFunction2");
+}
+
+/**
+ *  runtime添加属性，还可以添加任何对象
+ */
+- (void)testRunTimeAddValue
+{
+    //添加属性
+    objc_setAssociatedObject(self, &associatedObjectKey, @"addProperty", OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
+    //添加对象
+    UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(10, 100, 300, 60)];
+    label.numberOfLines = 2;
+    label.textColor = [UIColor blueColor];
+    label.backgroundColor = [UIColor redColor];
+    objc_setAssociatedObject(self, &associatedObjectKey2,label, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
+    [self getValueOfRunTime];
+}
+
+- (void)getValueOfRunTime
+{
+    //获取关联对象string与label
+
+    NSString *propertyString = objc_getAssociatedObject(self, &associatedObjectKey);
+
+    UILabel *label = objc_getAssociatedObject(self, &associatedObjectKey2);
+    label.text = [NSString stringWithFormat:@"动态添加的属性名称为：%@\n此label也是动态添加的对象", propertyString];
+    [self.view addSubview:label];
 }
 
 /**
